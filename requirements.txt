@@ -1,0 +1,5 @@
+Flask
+flask_socketio
+confluent_kafka
+pandas
+python-dotenv
