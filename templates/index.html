@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Services - Real-time Dashboard</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Custom CSS -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1a;
+            color: white;
+            overflow: hidden;
+        }
+        
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            grid-template-rows: 60px 1fr;
+            height: 100vh;
+        }
+        
+        .header {
+            grid-column: 1 / -1;
+            background: #2c3e50;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            border-bottom: 2px solid #34495e;
+        }
+        
+        .header h1 {
+            color: #ecf0f1;
+            font-size: 24px;
+        }
+        
+        .status-indicator {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e74c3c;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-dot.connected {
+            background: #2ecc71;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .sidebar {
+            background: #34495e;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .stats-panel {
+            margin-bottom: 20px;
+        }
+        
+        .stats-panel h3 {
+            color: #ecf0f1;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            background: #2c3e50;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .stat-item.critical {
+            border-left-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+        }
+        
+        .stat-item.warning {
+            border-left-color: #f39c12;
+            background: rgba(243, 156, 18, 0.1);
+        }
+        
+        .stat-item.normal {
+            border-left-color: #2ecc71;
+            background: rgba(46, 204, 113, 0.1);
+        }
+        
+        .alerts-panel {
+            margin-top: 20px;
+        }
+        
+        .alert-item {
+            padding: 10px;
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid #e74c3c;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+        
+        .alert-item .alert-time {
+            color: #bdc3c7;
+            font-size: 11px;
+        }
+        
+        .map-container {
+            position: relative;
+            height: 100%;
+        }
+        
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .map-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .control-btn {
+            background: rgba(44, 62, 80, 0.9);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .control-btn:hover {
+            background: rgba(52, 73, 94, 0.9);
+        }
+        
+        .control-btn.active {
+            background: #3498db;
+        }
+        
+        .legend {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(44, 62, 80, 0.9);
+            padding: 15px;
+            border-radius: 4px;
+            z-index: 1000;
+            min-width: 200px;
+        }
+        
+        .legend h4 {
+            margin-bottom: 10px;
+            color: #ecf0f1;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            font-size: 12px;
+        }
+        
+        .legend-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            border-radius: 50%;
+        }
+        
+        .timestamp {
+            color: #95a5a6;
+            font-size: 11px;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <h1>🚨 Emergency Services Dashboard</h1>
+            <div class="status-indicator">
+                <span id="status-text">Connecting...</span>
+                <div class="status-dot" id="status-dot"></div>
+            </div>
+        </div>
+        
+        <div class="sidebar">
+            <div class="stats-panel">
+                <h3>📊 Current Status</h3>
+                <div id="incident-stats"></div>
+                <div id="personnel-stats"></div>
+                <div id="vehicle-stats"></div>
+            </div>
+            
+            <div class="alerts-panel">
+                <h3>🚨 Critical Alerts</h3>
+                <div id="alerts-container"></div>
+            </div>
+            
+            <div class="timestamp" id="last-update">
+                Last updated: --:--
+            </div>
+        </div>
+        
+        <div class="map-container">
+            <div class="map-controls">
+                <button class="control-btn active" id="show-incidents">🔥 Incidents</button>
+                <button class="control-btn active" id="show-personnel">👨‍🚒 Personnel</button>
+                <button class="control-btn active" id="show-vehicles">🚛 Vehicles</button>
+                <button class="control-btn active" id="show-routes">📍 Routes</button>
+                <button class="control-btn" id="refresh-data">🔄 Refresh</button>
+            </div>
+            
+            <div id="map"></div>
+            
+            <div class="legend">
+                <h4>Map Legend</h4>
+                    <div class="legend-item">
+                        <div class="legend-icon" style="background: #e74c3c; border-radius: 0;"></div>
+                        <span>Fire Truck</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-icon" style="background: #9b59b6; border-radius: 0;"></div>
+                        <span>Ambulance</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-icon" style="background: #3498db; border-radius: 0;"></div>
+                        <span>Police Vehicle</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-icon" style="background: #f39c12; border-radius: 0;"></div>
+                        <span>Emergency Command</span>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+    
+    <script>
+        // Initialize Socket.IO connection
+        const socket = io();
+        
+        // Initialize map centered on Sydney
+        const map = L.map('map').setView([-33.8688, 151.2093], 11);
+        
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        
+        // Layer groups for different types of markers
+        const incidentLayer = L.layerGroup().addTo(map);
+        const personnelLayer = L.layerGroup().addTo(map);
+        const vehicleLayer = L.layerGroup().addTo(map);
+        const routeLayer = L.layerGroup().addTo(map);
+        
+        // Track visibility state
+        const layerVisibility = {
+            incidents: true,
+            personnel: true,
+            vehicles: true,
+            routes: true
+        };
+        
+        // Socket event handlers
+        socket.on('connect', function() {
+            document.getElementById('status-text').textContent = 'Connected';
+            document.getElementById('status-dot').classList.add('connected');
+            console.log('Connected to server');
+            
+            // Request initial data
+            socket.emit('request_update');
+        });
+        
+        socket.on('disconnect', function() {
+            document.getElementById('status-text').textContent = 'Disconnected';
+            document.getElementById('status-dot').classList.remove('connected');
+            console.log('Disconnected from server');
+        });
+        
+        socket.on('data_update', function(data) {
+            console.log('Received data update:', data);
+            updateDashboard(data);
+        });
+        
+        socket.on('critical_alert', function(alert) {
+            console.log('Critical alert:', alert);
+            showCriticalAlert(alert);
+        });
+        
+        // Update dashboard with new data
+        function updateDashboard(data) {
+            console.log('Updating dashboard with data:', data);
+            
+            // Add null checks and logging for debugging
+            if (data.stats) updateStats(data.stats);
+            else console.warn('No stats data received');
+            
+            if (data.incidents) updateIncidents(data.incidents);
+            else console.warn('No incidents data received');
+            
+            if (data.personnel) updatePersonnel(data.personnel);
+            else console.warn('No personnel data received');
+            
+            if (data.vehicles) {
+                console.log('Updating vehicles with data:', data.vehicles);
+                updateVehicles(data.vehicles);
+            } else {
+                console.warn('No vehicles data received');
+            }
+            
+            if (data.routes) updateRoutes(data.routes);
+            else console.warn('No routes data received');
+            
+            if (data.alerts) updateAlerts(data.alerts);
+            else console.warn('No alerts data received');
+            
+            // Update timestamp
+            const timestamp = new Date(data.timestamp);
+            document.getElementById('last-update').textContent = 
+                `Last updated: ${timestamp.toLocaleTimeString()}`;
+        }
+        
+        // Update statistics panel
+        function updateStats(stats) {
+            if (!stats) return;
+            
+            // Incident stats
+            const incidentHtml = Object.entries(stats.incidents || {})
+                .map(([severity, count]) => 
+                    `<div class="stat-item ${severity}">
+                        <span>${severity.charAt(0).toUpperCase() + severity.slice(1)} Incidents</span>
+                        <span>${count}</span>
+                    </div>`
+                ).join('');
+            document.getElementById('incident-stats').innerHTML = incidentHtml;
+            
+            // Personnel stats
+            const personnelHtml = Object.entries(stats.personnel || {})
+                .map(([risk, count]) => 
+                    `<div class="stat-item ${risk.toLowerCase()}">
+                        <span>${risk} Personnel</span>
+                        <span>${count}</span>
+                    </div>`
+                ).join('');
+            document.getElementById('personnel-stats').innerHTML = personnelHtml;
+            
+            // Vehicle stats
+            const vehicles = stats.vehicles || {};
+            const vehicleHtml = `
+                <div class="stat-item normal">
+                    <span>Available Vehicles</span>
+                    <span>${vehicles.available || 0}</span>
+                </div>
+                <div class="stat-item warning">
+                    <span>En Route</span>
+                    <span>${vehicles.enroute || 0}</span>
+                </div>
+                <div class="stat-item critical">
+                    <span>Deployed</span>
+                    <span>${vehicles.deployed || 0}</span>
+                </div>
+            `;
+            document.getElementById('vehicle-stats').innerHTML = vehicleHtml;
+        }
+        
+        // Update incidents on map
+        function updateIncidents(incidents) {
+            if (!layerVisibility.incidents || !incidents) return;
+            
+            incidentLayer.clearLayers();
+            
+            incidents.forEach(incident => {
+                const color = getSeverityColor(incident.severity);
+                const size = getSeveritySize(incident.severity);
+                
+                const marker = L.circleMarker([incident.incident_lat, incident.incident_lng], {
+                    color: color,
+                    fillColor: color,
+                    fillOpacity: 0.7,
+                    radius: size,
+                    weight: 2
+                });
+                
+                const popupContent = `
+                    <strong>${incident.incident_type.replace('_', ' ').toUpperCase()}</strong><br>
+                    <strong>Severity:</strong> ${incident.severity}<br>
+                    <strong>Status:</strong> ${incident.incident_status}<br>
+                    <strong>Personnel:</strong> ${incident.assigned_personnel_count || 0}<br>
+                    <strong>Vehicles:</strong> ${incident.assigned_vehicle_count || 0}<br>
+                    <em>${incident.description}</em>
+                `;
+                
+                marker.bindPopup(popupContent);
+                incidentLayer.addLayer(marker);
+            });
+        }
+        
+        // Update personnel on map
+        function updatePersonnel(personnel) {
+            if (!layerVisibility.personnel || !personnel) return;
+            
+            personnelLayer.clearLayers();
+            
+            personnel.forEach(person => {
+                const color = getRiskColor(person.risk_level);
+                
+                const marker = L.circleMarker([person.latitude, person.longitude], {
+                    color: '#2c3e50',
+                    fillColor: color,
+                    fillOpacity: 0.8,
+                    radius: 6,
+                    weight: 2
+                });
+                
+                const popupContent = `
+                    <strong>Personnel ${person.personnel_id}</strong><br>
+                    <strong>Status:</strong> ${person.location_status}<br>
+                    <strong>Risk Level:</strong> ${person.risk_level}<br>
+                    <strong>Heart Rate:</strong> ${person.heart_rate} bpm<br>
+                    <strong>Oxygen:</strong> ${person.oxygen_saturation}%<br>
+                    <strong>Temperature:</strong> ${person.body_temperature}°C<br>
+                    ${person.incident_id ? `<strong>Incident:</strong> ${person.incident_id}` : ''}
+                `;
+                
+                marker.bindPopup(popupContent);
+                personnelLayer.addLayer(marker);
+            });
+        }
+        
+        // Update vehicles on map - FIXED VERSION
+        function updateVehicles(vehicles) {
+            console.log('updateVehicles called with:', vehicles);
+            
+            // Add null check and early return
+            if (!vehicles) {
+                console.warn('updateVehicles: vehicles is null or undefined');
+                return;
+            }
+            
+            if (!Array.isArray(vehicles)) {
+                console.warn('updateVehicles: vehicles is not an array:', typeof vehicles);
+                return;
+            }
+            
+            if (!layerVisibility.vehicles) {
+                console.log('updateVehicles: vehicles layer not visible, skipping');
+                return;
+            }
+            
+            vehicleLayer.clearLayers();
+            console.log(`Processing ${vehicles.length} vehicles`);
+            
+            vehicles.forEach((vehicle, index) => {
+                console.log(`Processing vehicle ${index}:`, vehicle);
+                
+                // Check if vehicle has required properties
+                if (!vehicle.latitude || !vehicle.longitude) {
+                    console.warn(`Vehicle ${index} missing coordinates:`, vehicle);
+                    return;
+                }
+                
+                const color = getVehicleColor(vehicle.vehicle_type);
+                
+                const marker = L.circleMarker([vehicle.latitude, vehicle.longitude], {
+                    color: '#ffffff',
+                    fillColor: color,
+                    fillOpacity: 0.9,
+                    radius: 8,
+                    weight: 2
+                });
+                
+                const popupContent = `
+                    <strong>${vehicle.vehicle_type.replace('_', ' ').toUpperCase()}</strong><br>
+                    <strong>Available:</strong> ${vehicle.available_vehicles || 0}<br>
+                    <strong>En Route:</strong> ${vehicle.enroute_vehicles || 0}<br>
+                    <strong>Deployed:</strong> ${vehicle.deployed_vehicles || 0}<br>
+                    <strong>Total:</strong> ${vehicle.total_vehicles || 1}
+                `;
+                
+                marker.bindPopup(popupContent);
+                vehicleLayer.addLayer(marker);
+            });
+            
+            console.log(`Added ${vehicles.length} vehicle markers to map`);
+        }
+
+        // Update active routes
+        function updateRoutes(routes) {
+            if (!layerVisibility.routes || !routes) return;
+            
+            routeLayer.clearLayers();
+            
+            routes.forEach(route => {
+                // Check if route has required coordinates
+                if (!route.current_lat || !route.current_lng || !route.destination_lat || !route.destination_lng) {
+                    return;
+                }
+                
+                // Draw line from current position to destination
+                const line = L.polyline([
+                    [route.current_lat, route.current_lng],
+                    [route.destination_lat, route.destination_lng]
+                ], {
+                    color: getSeverityColor(route.severity),
+                    weight: 3,
+                    opacity: 0.7,
+                    dashArray: '10, 10'
+                });
+                
+                const popupContent = `
+                    <strong>${route.personnel_id ? `Personnel ${route.personnel_id}` : `Vehicle ${route.vehicle_id}`}</strong><br>
+                    <strong>Responding to:</strong> ${route.incident_type}<br>
+                    <strong>Distance:</strong> ${route.distance_km ? route.distance_km.toFixed(1) : 'N/A'} km<br>
+                    <strong>ETA:</strong> ${route.eta_minutes ? Math.round(route.eta_minutes) : 'N/A'} minutes<br>
+                    <strong>Status:</strong> ${route.personnel_status}
+                `;
+                
+                line.bindPopup(popupContent);
+                routeLayer.addLayer(line);
+                
+                // Add moving marker for unit
+                const unitMarker = L.circleMarker([route.current_lat, route.current_lng], {
+                    color: getSeverityColor(route.severity),
+                    fillColor: getSeverityColor(route.severity),
+                    fillOpacity: 0.8,
+                    radius: 5,
+                    weight: 2
+                });
+                
+                routeLayer.addLayer(unitMarker);
+            });
+        }
+        
+        // Update alerts panel
+        function updateAlerts(alerts) {
+            const alertsContainer = document.getElementById('alerts-container');
+            
+            if (!alerts || alerts.length === 0) {
+                alertsContainer.innerHTML = '<p style="color: #95a5a6; font-size: 12px;">No critical alerts</p>';
+                return;
+            }
+            
+            const alertsHtml = alerts.slice(0, 5).map(alert => `
+                <div class="alert-item">
+                    <strong>Personnel ${alert.personnel_id}</strong><br>
+                    <span>${alert.recommendation}</span><br>
+                    <div class="alert-time">${new Date(alert.alert_timestamp).toLocaleTimeString()}</div>
+                </div>
+            `).join('');
+            
+            alertsContainer.innerHTML = alertsHtml;
+        }
+        
+        // Show critical alert notification
+        function showCriticalAlert(alert) {
+            // Flash the status indicator
+            const statusDot = document.getElementById('status-dot');
+            statusDot.style.background = '#e74c3c';
+            statusDot.style.animation = 'pulse 0.5s infinite';
+            
+            setTimeout(() => {
+                statusDot.style.background = '#2ecc71';
+                statusDot.style.animation = 'pulse 2s infinite';
+            }, 5000);
+            
+            // You could add browser notification here if needed
+            if (Notification.permission === 'granted') {
+                new Notification('Emergency Alert', {
+                    body: `Personnel ${alert.personnel_id}: ${alert.recommendation}`,
+                    icon: '/static/emergency-icon.png'
+                });
+            }
+        }
+        
+        // Helper functions for colors and icons
+        function getSeverityColor(severity) {
+            const colors = {
+                'low': '#2ecc71',
+                'medium': '#f39c12', 
+                'high': '#e67e22',
+                'critical': '#e74c3c'
+            };
+            return colors[severity] || '#3498db';
+        }
+        
+        function getSeveritySize(severity) {
+            const sizes = {
+                'low': 8,
+                'medium': 12,
+                'high': 16,
+                'critical': 20
+            };
+            return sizes[severity] || 10;
+        }
+        
+        function getRiskColor(riskLevel) {
+            const colors = {
+                'NORMAL': '#2ecc71',
+                'WARNING': '#f39c12',
+                'CRITICAL': '#e74c3c'
+            };
+            return colors[riskLevel] || '#3498db';
+        }
+        
+        function getVehicleColor(vehicleType) {
+            // Simplified mapping - group similar types
+            if (vehicleType && (vehicleType.includes('fire') || vehicleType.includes('rescue'))) {
+                return '#e74c3c'; // Red for fire
+            }
+            if (vehicleType && (vehicleType.includes('ambulance') || vehicleType.includes('medical'))) {
+                return '#9b59b6'; // Purple for medical
+            }
+            if (vehicleType && (vehicleType.includes('police') || vehicleType.includes('swat'))) {
+                return '#3498db'; // Blue for police
+            }
+            if (vehicleType && (vehicleType.includes('emergency') || vehicleType.includes('command') || vehicleType.includes('hazmat') || vehicleType.includes('bomb'))) {
+                return '#f39c12'; // Orange for emergency services
+            }
+            
+            // Default fallback
+            return '#95a5a6'; // Gray for unknown types
+        }
+        
+        // Control button handlers
+        document.getElementById('show-incidents').addEventListener('click', function() {
+            layerVisibility.incidents = !layerVisibility.incidents;
+            this.classList.toggle('active');
+            
+            if (layerVisibility.incidents) {
+                map.addLayer(incidentLayer);
+            } else {
+                map.removeLayer(incidentLayer);
+            }
+        });
+        
+        document.getElementById('show-personnel').addEventListener('click', function() {
+            layerVisibility.personnel = !layerVisibility.personnel;
+            this.classList.toggle('active');
+            
+            if (layerVisibility.personnel) {
+                map.addLayer(personnelLayer);
+            } else {
+                map.removeLayer(personnelLayer);
+            }
+        });
+        
+        document.getElementById('show-vehicles').addEventListener('click', function() {
+            layerVisibility.vehicles = !layerVisibility.vehicles;
+            this.classList.toggle('active');
+            
+            if (layerVisibility.vehicles) {
+                map.addLayer(vehicleLayer);
+            } else {
+                map.removeLayer(vehicleLayer);
+            }
+        });
+        
+        document.getElementById('show-routes').addEventListener('click', function() {
+            layerVisibility.routes = !layerVisibility.routes;
+            this.classList.toggle('active');
+            
+            if (layerVisibility.routes) {
+                map.addLayer(routeLayer);
+            } else {
+                map.removeLayer(routeLayer);
+            }
+        });
+        
+        document.getElementById('refresh-data').addEventListener('click', function() {
+            socket.emit('request_update');
+            this.style.transform = 'rotate(360deg)';
+            this.style.transition = 'transform 0.5s';
+            
+            setTimeout(() => {
+                this.style.transform = '';
+                this.style.transition = '';
+            }, 500);
+        });
+        
+        // Request notification permission
+        if ('Notification' in window && Notification.permission === 'default') {
+            Notification.requestPermission();
+        }
+        
+        // Auto-refresh data every 30 seconds
+        setInterval(() => {
+            socket.emit('request_update');
+        }, 30000);
+        
+    </script>
+</body>
+</html>
