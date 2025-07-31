@@ -1,0 +1,11 @@
+incident_id,incident_type,severity,latitude,longitude,description,personnel_required,vehicles_required
+1,structure_fire,critical,-33.8725,151.2087,High-rise apartment fire - 15th floor - multiple residents trapped,12,4
+2,vehicle_accident,high,-33.8590,151.2040,Multi-vehicle collision on Sydney Harbour Bridge - injuries reported,8,3
+3,medical_emergency,critical,-33.8614,151.2057,Cardiac arrest at Sydney Opera House - large crowd present,4,2
+4,hazmat_spill,high,-33.8796,151.2071,Chemical spill at industrial facility - evacuation required,10,3
+5,building_collapse,critical,-33.8682,151.2101,Partial building collapse - construction site - workers trapped,15,5
+6,water_rescue,medium,-33.8567,151.2153,Person in distress in Sydney Harbour near Circular Quay,6,2
+7,terrorist_threat,critical,-33.8688,151.2093,Suspicious package at Central Station - bomb squad required,20,6
+8,wildfire,high,-33.8456,151.2634,Bushfire spreading towards residential area - immediate evacuation,18,5
+9,gas_leak,medium,-33.8834,151.2163,Major gas leak in residential street - building evacuations,8,3
+10,industrial_accident,high,-33.8912,151.1843,Worker trapped in machinery at Port Botany - heavy rescue required,10,4

@@ -1,0 +1,51 @@
+vehicle_id,call_sign,vehicle_type,department,latitude,longitude,status,home_station,crew_capacity
+1,Fire-01,fire_truck,Fire Department,-33.8688,151.2093,available,Sydney CBD Station,4
+2,Fire-02,fire_truck,Fire Department,-33.8688,151.2093,available,Sydney CBD Station,4
+3,Fire-03,fire_truck,Fire Department,-33.8986,151.1767,available,Surry Hills Station,4
+4,Fire-04,fire_truck,Fire Department,-33.8986,151.1767,available,Surry Hills Station,4
+5,Fire-05,fire_truck,Fire Department,-33.8564,151.2142,available,Circular Quay Station,4
+6,Fire-06,fire_truck,Fire Department,-33.8564,151.2142,available,Circular Quay Station,4
+7,Fire-07,fire_truck,Fire Department,-33.8405,151.2358,available,Kings Cross Station,4
+8,Fire-08,fire_truck,Fire Department,-33.8405,151.2358,available,Kings Cross Station,4
+9,Fire-09,fire_truck,Fire Department,-33.9037,151.2194,available,Redfern Station,4
+10,Fire-10,fire_truck,Fire Department,-33.9037,151.2194,available,Redfern Station,4
+11,Fire-11,fire_truck,Fire Department,-33.8799,151.2090,available,Darlinghurst Station,4
+12,Fire-12,fire_truck,Fire Department,-33.8799,151.2090,available,Darlinghurst Station,4
+13,Rescue-01,rescue_truck,Fire Department,-33.8688,151.2093,available,Sydney CBD Station,6
+14,Rescue-02,rescue_truck,Fire Department,-33.8986,151.1767,available,Surry Hills Station,6
+15,Rescue-03,rescue_truck,Fire Department,-33.8564,151.2142,available,Circular Quay Station,6
+16,Police-01,police_car,Police,-33.8688,151.2093,available,Sydney Police Centre,2
+17,Police-02,police_car,Police,-33.8688,151.2093,available,Sydney Police Centre,2
+18,Police-03,police_car,Police,-33.8688,151.2093,available,Sydney Police Centre,2
+19,Police-04,police_car,Police,-33.8986,151.1767,available,Surry Hills Police,2
+20,Police-05,police_car,Police,-33.8986,151.1767,available,Surry Hills Police,2
+21,Police-06,police_car,Police,-33.8564,151.2142,available,Circular Quay Police,2
+22,Police-07,police_car,Police,-33.8564,151.2142,available,Circular Quay Police,2
+23,Police-08,police_car,Police,-33.8405,151.2358,available,Kings Cross Police,2
+24,Police-09,police_car,Police,-33.8405,151.2358,available,Kings Cross Police,2
+25,Police-10,police_car,Police,-33.9037,151.2194,available,Redfern Police,2
+26,Police-11,police_car,Police,-33.9037,151.2194,available,Redfern Police,2
+27,SWAT-01,swat_vehicle,Police,-33.8688,151.2093,available,Sydney Police Centre,8
+28,SWAT-02,swat_vehicle,Police,-33.8986,151.1767,available,Surry Hills Police,8
+29,Ambulance-01,ambulance,Ambulance,-33.8688,151.2093,available,Sydney Ambulance Station,2
+30,Ambulance-02,ambulance,Ambulance,-33.8688,151.2093,available,Sydney Ambulance Station,2
+31,Ambulance-03,ambulance,Ambulance,-33.8688,151.2093,available,Sydney Ambulance Station,2
+32,Ambulance-04,ambulance,Ambulance,-33.8986,151.1767,available,Surry Hills Ambulance,2
+33,Ambulance-05,ambulance,Ambulance,-33.8986,151.1767,available,Surry Hills Ambulance,2
+34,Ambulance-06,ambulance,Ambulance,-33.8564,151.2142,available,Circular Quay Ambulance,2
+35,Ambulance-07,ambulance,Ambulance,-33.8564,151.2142,available,Circular Quay Ambulance,2
+36,Ambulance-08,ambulance,Ambulance,-33.8405,151.2358,available,Kings Cross Ambulance,2
+37,Ambulance-09,ambulance,Ambulance,-33.8405,151.2358,available,Kings Cross Ambulance,2
+38,Ambulance-10,ambulance,Ambulance,-33.9037,151.2194,available,Redfern Ambulance,2
+39,Ambulance-11,ambulance,Ambulance,-33.9037,151.2194,available,Redfern Ambulance,2
+40,ICU-01,intensive_care_ambulance,Ambulance,-33.8688,151.2093,available,Sydney Ambulance Station,3
+41,ICU-02,intensive_care_ambulance,Ambulance,-33.8986,151.1767,available,Surry Hills Ambulance,3
+42,ICU-03,intensive_care_ambulance,Ambulance,-33.8564,151.2142,available,Circular Quay Ambulance,3
+43,Emergency-01,command_vehicle,Emergency Services,-33.8688,151.2093,available,Emergency Operations Centre,6
+44,Emergency-02,command_vehicle,Emergency Services,-33.8986,151.1767,available,Eastern District Emergency,6
+45,Emergency-03,command_vehicle,Emergency Services,-33.8564,151.2142,available,Northern District Emergency,6
+46,Emergency-04,hazmat_truck,Emergency Services,-33.8688,151.2093,available,Emergency Operations Centre,4
+47,Emergency-05,hazmat_truck,Emergency Services,-33.8986,151.1767,available,Eastern District Emergency,4
+48,Emergency-06,bomb_squad_vehicle,Emergency Services,-33.8688,151.2093,available,Emergency Operations Centre,4
+49,Emergency-07,communication_van,Emergency Services,-33.8564,151.2142,available,Northern District Emergency,2
+50,Emergency-08,mobile_command_unit,Emergency Services,-33.8688,151.2093,available,Emergency Operations Centre,8

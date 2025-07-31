@@ -1,0 +1,101 @@
+personnel_id,name,department,rank,latitude,longitude,status,home_station
+1,John Smith,Fire Department,Captain,-33.8688,151.2093,available,Sydney CBD Station
+2,Mary Johnson,Fire Department,Lieutenant,-33.8688,151.2093,available,Sydney CBD Station
+3,David Brown,Fire Department,Firefighter,-33.8688,151.2093,available,Sydney CBD Station
+4,Sarah Wilson,Fire Department,Firefighter,-33.8688,151.2093,available,Sydney CBD Station
+5,Michael Davis,Fire Department,Engineer,-33.8688,151.2093,available,Sydney CBD Station
+6,Jennifer Miller,Fire Department,Captain,-33.8986,151.1767,available,Surry Hills Station
+7,Robert Garcia,Fire Department,Lieutenant,-33.8986,151.1767,available,Surry Hills Station
+8,Lisa Rodriguez,Fire Department,Firefighter,-33.8986,151.1767,available,Surry Hills Station
+9,William Martinez,Fire Department,Firefighter,-33.8986,151.1767,available,Surry Hills Station
+10,Emma Anderson,Fire Department,Engineer,-33.8986,151.1767,available,Surry Hills Station
+11,Thomas Taylor,Fire Department,Captain,-33.8564,151.2142,available,Circular Quay Station
+12,Olivia Thomas,Fire Department,Lieutenant,-33.8564,151.2142,available,Circular Quay Station
+13,Christopher Jackson,Fire Department,Firefighter,-33.8564,151.2142,available,Circular Quay Station
+14,Sophia White,Fire Department,Firefighter,-33.8564,151.2142,available,Circular Quay Station
+15,Daniel Harris,Fire Department,Engineer,-33.8564,151.2142,available,Circular Quay Station
+16,Isabella Martin,Fire Department,Captain,-33.8405,151.2358,available,Kings Cross Station
+17,Matthew Thompson,Fire Department,Lieutenant,-33.8405,151.2358,available,Kings Cross Station
+18,Ava Garcia,Fire Department,Firefighter,-33.8405,151.2358,available,Kings Cross Station
+19,Anthony Rodriguez,Fire Department,Firefighter,-33.8405,151.2358,available,Kings Cross Station
+20,Mia Lewis,Fire Department,Engineer,-33.8405,151.2358,available,Kings Cross Station
+21,Mark Lee,Fire Department,Captain,-33.9037,151.2194,available,Redfern Station
+22,Charlotte Walker,Fire Department,Lieutenant,-33.9037,151.2194,available,Redfern Station
+23,Joseph Hall,Fire Department,Firefighter,-33.9037,151.2194,available,Redfern Station
+24,Amelia Allen,Fire Department,Firefighter,-33.9037,151.2194,available,Redfern Station
+25,Ryan Young,Fire Department,Engineer,-33.9037,151.2194,available,Redfern Station
+26,Harper Hernandez,Fire Department,Captain,-33.8799,151.2090,available,Darlinghurst Station
+27,Nicholas King,Fire Department,Lieutenant,-33.8799,151.2090,available,Darlinghurst Station
+28,Evelyn Wright,Fire Department,Firefighter,-33.8799,151.2090,available,Darlinghurst Station
+29,Jacob Lopez,Fire Department,Firefighter,-33.8799,151.2090,available,Darlinghurst Station
+30,Abigail Hill,Fire Department,Engineer,-33.8799,151.2090,available,Darlinghurst Station
+31,Alexander Scott,Police,Sergeant,-33.8688,151.2093,available,Sydney Police Centre
+32,Emily Green,Police,Constable,-33.8688,151.2093,available,Sydney Police Centre
+33,Ethan Adams,Police,Senior Constable,-33.8688,151.2093,available,Sydney Police Centre
+34,Madison Baker,Police,Constable,-33.8688,151.2093,available,Sydney Police Centre
+35,Mason Gonzalez,Police,Detective,-33.8688,151.2093,available,Sydney Police Centre
+36,Elizabeth Nelson,Police,Sergeant,-33.8986,151.1767,available,Surry Hills Police
+37,Logan Carter,Police,Constable,-33.8986,151.1767,available,Surry Hills Police
+38,Avery Mitchell,Police,Senior Constable,-33.8986,151.1767,available,Surry Hills Police
+39,Lucas Perez,Police,Constable,-33.8986,151.1767,available,Surry Hills Police
+40,Ella Roberts,Police,Detective,-33.8986,151.1767,available,Surry Hills Police
+41,Jackson Turner,Police,Sergeant,-33.8564,151.2142,available,Circular Quay Police
+42,Scarlett Phillips,Police,Constable,-33.8564,151.2142,available,Circular Quay Police
+43,Aiden Campbell,Police,Senior Constable,-33.8564,151.2142,available,Circular Quay Police
+44,Victoria Parker,Police,Constable,-33.8564,151.2142,available,Circular Quay Police
+45,Hunter Evans,Police,Detective,-33.8564,151.2142,available,Circular Quay Police
+46,Grace Edwards,Police,Sergeant,-33.8405,151.2358,available,Kings Cross Police
+47,Connor Collins,Police,Constable,-33.8405,151.2358,available,Kings Cross Police
+48,Chloe Stewart,Police,Senior Constable,-33.8405,151.2358,available,Kings Cross Police
+49,Isaac Sanchez,Police,Constable,-33.8405,151.2358,available,Kings Cross Police
+50,Zoey Morris,Police,Detective,-33.8405,151.2358,available,Kings Cross Police
+51,Luke Rogers,Police,Sergeant,-33.9037,151.2194,available,Redfern Police
+52,Lily Reed,Police,Constable,-33.9037,151.2194,available,Redfern Police
+53,Owen Cook,Police,Senior Constable,-33.9037,151.2194,available,Redfern Police
+54,Layla Morgan,Police,Constable,-33.9037,151.2194,available,Redfern Police
+55,Wyatt Bell,Police,Detective,-33.9037,151.2194,available,Redfern Police
+56,Hannah Murphy,Ambulance,Paramedic,-33.8688,151.2093,available,Sydney Ambulance Station
+57,Leo Bailey,Ambulance,Senior Paramedic,-33.8688,151.2093,available,Sydney Ambulance Station
+58,Nora Rivera,Ambulance,Paramedic,-33.8688,151.2093,available,Sydney Ambulance Station
+59,Ian Cooper,Ambulance,Intensive Care Paramedic,-33.8688,151.2093,available,Sydney Ambulance Station
+60,Stella Richardson,Ambulance,Paramedic,-33.8688,151.2093,available,Sydney Ambulance Station
+61,Caleb Cox,Ambulance,Paramedic,-33.8986,151.1767,available,Surry Hills Ambulance
+62,Aurora Howard,Ambulance,Senior Paramedic,-33.8986,151.1767,available,Surry Hills Ambulance
+63,Elijah Ward,Ambulance,Paramedic,-33.8986,151.1767,available,Surry Hills Ambulance
+64,Savannah Torres,Ambulance,Intensive Care Paramedic,-33.8986,151.1767,available,Surry Hills Ambulance
+65,Grayson Peterson,Ambulance,Paramedic,-33.8986,151.1767,available,Surry Hills Ambulance
+66,Brooklyn Gray,Ambulance,Paramedic,-33.8564,151.2142,available,Circular Quay Ambulance
+67,Mateo Ramirez,Ambulance,Senior Paramedic,-33.8564,151.2142,available,Circular Quay Ambulance
+68,Leah James,Ambulance,Paramedic,-33.8564,151.2142,available,Circular Quay Ambulance
+69,Jeremiah Watson,Ambulance,Intensive Care Paramedic,-33.8564,151.2142,available,Circular Quay Ambulance
+70,Zoe Brooks,Ambulance,Paramedic,-33.8564,151.2142,available,Circular Quay Ambulance
+71,Easton Kelly,Ambulance,Paramedic,-33.8405,151.2358,available,Kings Cross Ambulance
+72,Violet Sanders,Ambulance,Senior Paramedic,-33.8405,151.2358,available,Kings Cross Ambulance
+73,Nolan Price,Ambulance,Paramedic,-33.8405,151.2358,available,Kings Cross Ambulance
+74,Claire Bennett,Ambulance,Intensive Care Paramedic,-33.8405,151.2358,available,Kings Cross Ambulance
+75,Aaron Wood,Ambulance,Paramedic,-33.8405,151.2358,available,Kings Cross Ambulance
+76,Hazel Barnes,Ambulance,Paramedic,-33.9037,151.2194,available,Redfern Ambulance
+77,Christian Ross,Ambulance,Senior Paramedic,-33.9037,151.2194,available,Redfern Ambulance
+78,Paisley Henderson,Ambulance,Paramedic,-33.9037,151.2194,available,Redfern Ambulance
+79,Jaxon Coleman,Ambulance,Intensive Care Paramedic,-33.9037,151.2194,available,Redfern Ambulance
+80,Audrey Jenkins,Ambulance,Paramedic,-33.9037,151.2194,available,Redfern Ambulance
+81,Levi Perry,Emergency Services,Commander,-33.8688,151.2093,available,Emergency Operations Centre
+82,Skylar Powell,Emergency Services,Coordinator,-33.8688,151.2093,available,Emergency Operations Centre
+83,Dominic Long,Emergency Services,Specialist,-33.8688,151.2093,available,Emergency Operations Centre
+84,Genesis Patterson,Emergency Services,Coordinator,-33.8688,151.2093,available,Emergency Operations Centre
+85,Adrian Hughes,Emergency Services,Specialist,-33.8688,151.2093,available,Emergency Operations Centre
+86,Kinsley Flores,Emergency Services,Commander,-33.8986,151.1767,available,Eastern District Emergency
+87,Jude Washington,Emergency Services,Coordinator,-33.8986,151.1767,available,Eastern District Emergency
+88,Nova Butler,Emergency Services,Specialist,-33.8986,151.1767,available,Eastern District Emergency
+89,Colton Simmons,Emergency Services,Coordinator,-33.8986,151.1767,available,Eastern District Emergency
+90,Elena Foster,Emergency Services,Specialist,-33.8986,151.1767,available,Eastern District Emergency
+91,Parker Gonzales,Emergency Services,Commander,-33.8564,151.2142,available,Northern District Emergency
+92,Maya Bryant,Emergency Services,Coordinator,-33.8564,151.2142,available,Northern District Emergency
+93,Roman Alexander,Emergency Services,Specialist,-33.8564,151.2142,available,Northern District Emergency
+94,Naomi Russell,Emergency Services,Coordinator,-33.8564,151.2142,available,Northern District Emergency
+95,Ezekiel Griffin,Emergency Services,Specialist,-33.8564,151.2142,available,Northern District Emergency
+96,Aaliyah Diaz,Emergency Services,Commander,-33.8405,151.2358,available,Central District Emergency
+97,Axel Hayes,Emergency Services,Coordinator,-33.8405,151.2358,available,Central District Emergency
+98,Ariana Myers,Emergency Services,Specialist,-33.8405,151.2358,available,Central District Emergency
+99,Kayden Ford,Emergency Services,Coordinator,-33.8405,151.2358,available,Central District Emergency
+100,Gabriella Hamilton,Emergency Services,Specialist,-33.8405,151.2358,available,Central District Emergency
